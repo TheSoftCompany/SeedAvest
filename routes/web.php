@@ -12,13 +12,44 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('frontend.welcome');
 });
+
+Route::get('/achievements', function () {
+  return view('frontend.achievements');
+});
+
+Route::get('/contact', function () {
+  return view('frontend.contact');
+});
+
+Route::get('/events', function () {
+  return view('frontend.events');
+});
+
+Route::get('/gallery', function () {
+  return view('frontend.gallery');
+});
+
+Route::get('/ourteam', function () {
+  return view('frontend.ourteam');
+});
+
+Route::get('/theapproach', function () {
+  return view('frontend.theapproach');
+});
+
+Route::get('/whatweoffer', function () {
+  return view('frontend.whatweoffer');
+});
+
+Route::get('/whoweare', function () {
+  return view('frontend.whoweare');
+});
+
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
-
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 	Route::get('table-list', function () {
 		return view('pages.table_list');
 	})->name('table');
@@ -48,7 +79,8 @@ Route::group(['middleware' => 'auth'], function () {
 	})->name('upgrade');
 });
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
+  Route::get('home', 'HomeController@index')->name('home');
 	Route::resource('user', 'UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
